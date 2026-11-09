@@ -1,0 +1,1219 @@
+/* ==========================================================================
+   FlujoPago · Componentes
+   Primitivas reutilizables (ui-*) + clases históricas que usa el TSX, unificadas
+   sobre los mismos tokens. Las utilidades de Tailwind se cargan después y pueden
+   ajustar cualquier caso puntual.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Encabezado de página: ¿dónde estoy? ¿qué puedo hacer?
+   -------------------------------------------------------------------------- */
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+.page-title > i,
+.page-title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+.page-subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.section-title > i {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* --------------------------------------------------------------------------
+   Tarjetas / paneles
+   -------------------------------------------------------------------------- */
+.ui-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.ui-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.ui-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+.ui-card-title > i {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.ui-card-footer {
+  padding: 0.875rem 1.25rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+/* Pie de tarjetas de flujo (Aprobaciones/Finanzas): grupos de acciones que se reacomodan por espacio
+   disponible (flex-wrap) en lugar de cambiar de columna a fila en un breakpoint fijo. */
+.workflow-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+.action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  min-width: 0;
+  max-width: 100%;
+}
+/* Cuando la barra ya no cabe en una línea, sus botones se reparten el ancho (en móvil quedan a todo el ancho). */
+.action-bar > .ui-btn {
+  flex: 1 1 auto;
+}
+
+/* Pastilla de conteo / metadato neutro */
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.625rem;
+  min-height: 1.5rem;
+  border-radius: 9999px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Botones — jerarquía: primario · secundario · fantasma · destructivo
+   -------------------------------------------------------------------------- */
+.ui-btn,
+.btn-primary,
+.btn-secondary,
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--control-h);
+  padding: var(--pad-button);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+.ui-btn:disabled,
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-accent:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ui-btn-primary,
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+  box-shadow: 0 1px 2px rgb(16 24 32 / 0.12);
+}
+.ui-btn-primary:hover:not(:disabled),
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+.ui-btn-primary:active:not(:disabled),
+.btn-primary:active:not(:disabled) {
+  background-color: var(--primary-active);
+}
+
+.ui-btn-secondary,
+.btn-secondary {
+  background-color: var(--bg-primary);
+  border-color: var(--border-dark);
+  color: var(--text-primary);
+}
+.ui-btn-secondary:hover:not(:disabled),
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+}
+
+.ui-btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+.ui-btn-ghost:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.ui-btn-danger {
+  background-color: var(--danger);
+  color: #fff;
+}
+.ui-btn-danger:hover:not(:disabled) {
+  background-color: var(--danger-hover);
+}
+.ui-btn-danger-outline {
+  background-color: var(--bg-primary);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+.ui-btn-danger-outline:hover:not(:disabled) {
+  background-color: var(--danger-bg);
+}
+
+.ui-btn-success {
+  background-color: var(--success);
+  color: #fff;
+}
+.ui-btn-success:hover:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* Un botón que ocupa todo el ancho (o que vive en una barra de acciones que se reacomoda) no debe forzar
+   su texto en una línea: con nowrap el rótulo se salía del botón en tarjetas angostas. */
+.ui-btn.w-full,
+.action-bar .ui-btn {
+  white-space: normal;
+  text-align: center;
+  min-width: 0;
+}
+
+.ui-btn-sm {
+  min-height: 2rem;
+  padding: 0.3125rem 0.75rem;
+  font-size: 0.8125rem;
+}
+.ui-btn-lg {
+  min-height: 2.875rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+}
+
+/* Botón de icono (acciones por fila, cierres, toggles) — área táctil ≥ 32px */
+.ui-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.ui-icon-btn:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+.ui-icon-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Pantallas táctiles: área mínima de toque ~44px (WCAG 2.5.5) en controles compactos.
+   Se aplica por tipo de puntero, no por ancho: un notebook con mouse mantiene la densidad. */
+@media (pointer: coarse) {
+  .ui-icon-btn,
+  .table-header-toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  .ui-btn-sm {
+    min-height: 2.75rem;
+  }
+  .filter-select {
+    min-height: 2.75rem;
+  }
+  .ui-btn,
+  .ui-input,
+  .form-input,
+  .form-select {
+    min-height: 2.75rem;
+  }
+  /* 16px evita el zoom automático de iOS al enfocar campos */
+  .ui-input,
+  .form-input,
+  .form-select,
+  .filter-select {
+    font-size: max(1rem, 16px);
+  }
+}
+
+/* Botón de login (antes con brillo animado): se conserva la clase, sin efecto decorativo */
+.btn-serious {
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Formularios
+   -------------------------------------------------------------------------- */
+.ui-label,
+.filter-label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.ui-input,
+.form-input,
+.form-select {
+  width: 100%;
+  max-width: 100%;
+  min-height: var(--control-h);
+  padding: var(--pad-input);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+.ui-input:hover:not(:disabled):not([readonly]),
+.form-input:hover:not(:disabled):not([readonly]),
+.form-select:hover:not(:disabled) {
+  border-color: var(--text-light);
+}
+.ui-input:focus,
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.ui-input::placeholder,
+.form-input::placeholder {
+  color: var(--text-light);
+}
+.ui-input[readonly],
+.form-input[readonly],
+.form-select[readonly],
+.ui-input:disabled,
+.form-input:disabled,
+.form-select:disabled {
+  background-color: var(--bg-secondary);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+select.ui-input,
+select.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23637181' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 0.625rem center;
+  background-repeat: no-repeat;
+  background-size: 1.1em 1.1em;
+  padding-right: 2.25rem;
+}
+
+textarea.form-input,
+textarea.ui-input {
+  min-height: 96px;
+  resize: vertical;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.55;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+input[type="number"].form-input {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+input[type="number"].form-input::-webkit-outer-spin-button,
+input[type="number"].form-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Checkboxes y radios con el color de marca */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--primary);
+}
+
+.field-error {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 3px rgb(180 51 43 / 0.15) !important;
+  animation: field-shake 0.32s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+@keyframes field-shake {
+  20%,
+  60% {
+    transform: translate3d(-3px, 0, 0);
+  }
+  40%,
+  80% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+.animate-shake {
+  animation: field-shake 0.32s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.form-section {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+.form-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.form-group-title i {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.info-block {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+.tech-badge {
+  display: flex;
+  flex-direction: column;
+  padding: 0.625rem 0.875rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.tech-label {
+  margin-bottom: 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.tech-value {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+.dropzone-active,
+#fileUploadArea.dragover {
+  border-color: var(--primary) !important;
+  background-color: var(--primary-soft) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Filtros
+   -------------------------------------------------------------------------- */
+/* Columnas intrínsecas: tantas como quepan con un mínimo legible para fechas/montos (1 en móvil,
+   3–4 en notebook, una sola fila en 2K/4K), sin depender de breakpoints de viewport. */
+.filter-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Select compacto de las cabeceras de tarjeta (Año / Mes / F. Pago) */
+.filter-select {
+  appearance: none;
+  min-width: 6.25rem;
+  min-height: 2rem;
+  padding: 0.25rem 2rem 0.25rem 0.625rem;
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23637181' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1em 1em;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.filter-select:hover {
+  border-color: var(--text-light);
+}
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* --------------------------------------------------------------------------
+   Estados (badges): color + punto + texto → no dependen solo del color
+   -------------------------------------------------------------------------- */
+.badge,
+.badge-pending,
+.badge-waiting,
+.badge-approved,
+.badge-approved-n1,
+.badge-approved-n2,
+.badge-approved-finanzas,
+.badge-rejected,
+.badge-paid,
+.badge-role-admin,
+.badge-role-solicitante,
+.badge-role-aprobador,
+.badge-role-finanzas {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.1875rem 0.625rem;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+.badge-pending::before,
+.badge-waiting::before,
+.badge-approved::before,
+.badge-approved-n1::before,
+.badge-approved-n2::before,
+.badge-approved-finanzas::before,
+.badge-rejected::before,
+.badge-paid::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background-color: currentColor;
+}
+
+.badge-pending {
+  background-color: var(--warning-bg);
+  color: var(--warning);
+  border-color: var(--warning-border);
+}
+.badge-waiting,
+.badge-role-solicitante {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-dark);
+}
+.badge-approved,
+.badge-approved-n1,
+.badge-role-aprobador {
+  background-color: var(--info-bg);
+  color: var(--info);
+  border-color: var(--info-border);
+}
+.badge-approved-n2 {
+  background-color: #dbe7f3;
+  color: #224b73;
+  border-color: #a9c3de;
+}
+.badge-approved-finanzas,
+.badge-role-finanzas {
+  background-color: var(--primary-soft);
+  color: var(--primary);
+  border-color: #c8d3de;
+}
+.badge-rejected {
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+.badge-paid {
+  background-color: var(--success-bg);
+  color: var(--success);
+  border-color: var(--success-border);
+}
+.badge-role-admin {
+  background-color: var(--c-navy);
+  color: #fff;
+  border-color: var(--c-navy);
+}
+
+/* --------------------------------------------------------------------------
+   Tablas: legibles, sin aspecto de planilla
+   -------------------------------------------------------------------------- */
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+th,
+td {
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+thead th {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background-color: var(--bg-secondary);
+  vertical-align: middle;
+}
+table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+table tbody tr:hover {
+  background-color: var(--bg-hover);
+}
+table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Contenedor con scroll horizontal interno + sombras que indican "hay más columnas" */
+.table-responsive-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--bg-primary);
+  background-image: linear-gradient(to right, var(--bg-primary), var(--bg-primary)),
+    linear-gradient(to right, var(--bg-primary), var(--bg-primary)),
+    linear-gradient(to right, rgb(16 24 32 / 0.1), rgb(16 24 32 / 0)),
+    linear-gradient(to left, rgb(16 24 32 / 0.1), rgb(16 24 32 / 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+.table-responsive-container table {
+  min-width: 62.5rem;
+  table-layout: auto;
+  border: none;
+}
+table:has(#tablaTodasSolicitudes),
+table:has(#tablaRecepcionado),
+.table-full-visibility {
+  min-width: 112.5rem !important;
+}
+#recentSolicitudes table,
+#contenedorTablasEmpresas table,
+#contenedorAprobacionesEmpresas table,
+#contenedorAprobaciones2Empresas table,
+#contenedorFinanzasEmpresas table {
+  min-width: 75rem !important;
+}
+#adminContent table,
+#devicesTableContainer table {
+  min-width: 59.375rem !important;
+}
+.whitespace-nowrap-responsive {
+  white-space: nowrap;
+}
+
+/* Visibilidad de columnas (comportamiento original: dentro de contenedores con scroll se muestran todas) */
+.hide-on-mobile,
+.hide-on-tablet {
+  display: table-cell !important;
+}
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none !important;
+  }
+}
+.table-responsive-container .hide-on-mobile,
+.table-responsive-container .hide-on-tablet {
+  display: table-cell !important;
+}
+
+/* Portátiles 13–14": se recupera ancho útil en celdas */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .table-responsive-container table th,
+  .table-responsive-container table td {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .table-responsive-container table {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Acordeón de tablas */
+.table-accordion-wrapper {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--transition-slow);
+}
+.table-accordion-wrapper.collapsed {
+  grid-template-rows: 0fr;
+}
+.table-accordion-content {
+  overflow: hidden;
+  min-height: 0;
+}
+.table-header-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.table-header-toggle:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+.table-header-toggle i {
+  font-size: 0.75rem;
+  transition: transform var(--transition-slow);
+}
+.table-header-toggle.collapsed i {
+  transform: rotate(-180deg);
+}
+
+/* Estado vacío reutilizable */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+.empty-state > i {
+  font-size: 1.5rem;
+  color: var(--text-light);
+}
+
+/* --------------------------------------------------------------------------
+   Línea de tiempo (historial de aprobaciones)
+   -------------------------------------------------------------------------- */
+.workflow-step,
+.timeline-step {
+  position: relative;
+  padding: 0.75rem 0 0.75rem 1.5rem;
+  margin-bottom: 0.5rem;
+  border-left: 2px solid var(--border);
+}
+.workflow-step::before,
+.timeline-step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.1rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--border-dark);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 0 1px var(--border-dark);
+  transform: translateX(-50%) translateX(-1px);
+}
+.workflow-step.completed,
+.timeline-step.step-completed {
+  border-color: var(--success);
+}
+.workflow-step.completed::before,
+.timeline-step.step-completed::before {
+  background-color: var(--success);
+  box-shadow: 0 0 0 1px var(--success);
+}
+.workflow-step.current,
+.timeline-step.step-current {
+  border-color: var(--primary);
+}
+.workflow-step.current::before,
+.timeline-step.step-current::before {
+  background-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+.timeline-step.step-rejected {
+  border-color: var(--danger);
+}
+.timeline-step.step-rejected::before {
+  background-color: var(--danger);
+  box-shadow: 0 0 0 1px var(--danger);
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.step-completed .step-header {
+  color: var(--success);
+}
+.step-current .step-header {
+  color: var(--primary);
+}
+.step-rejected .step-header {
+  color: var(--danger);
+}
+.step-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem 1rem;
+  margin-bottom: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.step-meta i {
+  margin-right: 0.25rem;
+}
+.step-comment {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--bg-secondary);
+  border-left: 3px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   Tarjetas KPI y registros
+   -------------------------------------------------------------------------- */
+.stat-card {
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+/* Rejilla KPI 1 → 2 → 4 columnas según el ancho REAL disponible (container query), no el viewport:
+   así responde también al sidebar expandido/colapsado y nunca deja tarjetas más angostas que su contenido. */
+.stat-grid-wrap {
+  container: stats / inline-size;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+@container stats (min-width: 22rem) {
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+@container stats (min-width: 52rem) {
+  .stat-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.log-entry {
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border-left: 3px solid var(--border-dark);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.8125rem;
+}
+.log-entry.log-create {
+  border-color: var(--primary);
+  background-color: var(--primary-soft);
+}
+.log-entry.log-approve {
+  border-color: var(--success);
+  background-color: var(--success-bg);
+}
+.log-entry.log-reject {
+  border-color: var(--danger);
+  background-color: var(--danger-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Modales genéricos
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgb(16 23 30 / 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+.modal-overlay.modal-show {
+  opacity: 1;
+}
+.modal-container {
+  width: 100%;
+  max-width: min(50rem, 100%);
+  max-height: 90dvh;
+  overflow-y: auto;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-modal);
+  transform: translateY(8px) scale(0.985);
+  transition: transform var(--transition-normal);
+}
+.modal-show .modal-container {
+  transform: none;
+}
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.modal-body {
+  padding: 1.25rem 1.5rem;
+}
+.modal-message {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  word-break: break-word;
+}
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.625rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+@media (max-width: 480px) {
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+  .modal-footer button,
+  .modal-footer a {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Carga
+   -------------------------------------------------------------------------- */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--primary-soft);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: ui-spin 0.7s linear infinite;
+}
+.spinner-large {
+  width: 36px;
+  height: 36px;
+  border-width: 3px;
+}
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(241 243 245 / 0.85);
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--border) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  border-radius: var(--radius-sm);
+  animation: ui-shimmer 1.4s ease-in-out infinite;
+}
+.skeleton-text {
+  height: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+.skeleton-text:last-child {
+  width: 80%;
+}
+.skeleton-row {
+  height: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.pulse-animation {
+  animation: ui-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Notificaciones (toasts)
+   -------------------------------------------------------------------------- */
+#notificationContainer {
+  position: fixed;
+  top: calc(var(--nav-height) + 0.75rem);
+  right: 1.25rem;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  width: calc(100% - 2.5rem);
+  max-width: 25rem;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  #notificationContainer {
+    top: auto;
+    right: auto;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 1.5rem);
+  }
+}
+#notificationContainer .notification {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.875rem 0.875rem 0.875rem 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pop);
+  pointer-events: auto;
+  animation: ui-toast-in var(--transition-slow) both;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+.notification-success {
+  border-left-color: var(--success) !important;
+}
+.notification-success .notification-icon {
+  color: var(--success);
+}
+.notification-error {
+  border-left-color: var(--danger) !important;
+}
+.notification-error .notification-icon {
+  color: var(--danger);
+}
+.notification-warning {
+  border-left-color: var(--warning) !important;
+}
+.notification-warning .notification-icon {
+  color: var(--warning);
+}
+.notification-info {
+  border-left-color: var(--info) !important;
+}
+.notification-info .notification-icon {
+  color: var(--info);
+}
+
+/* --------------------------------------------------------------------------
+   Utilidades de animación (rápidas y sutiles)
+   -------------------------------------------------------------------------- */
+.animate-fadeIn {
+  animation: ui-fade-in var(--transition-slow) ease-out both;
+}
+.glass-panel {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+}
+
+@keyframes ui-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ui-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@keyframes ui-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+@keyframes ui-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ui-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Alias históricos de keyframes usados por clases de Tailwind arbitrarias */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Fila de folio (Nueva Solicitud): 1 → 2 → 5 columnas según el ancho de la propia fila
+   (container query). Antes dependía del viewport (md:grid-cols-12) y en 768–1100px con el
+   sidebar abierto los campos Monto / Forma de pago quedaban de ~100px.
+   -------------------------------------------------------------------------- */
+.folio-item {
+  container: folio / inline-size;
+}
+.folio-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+}
+.folio-remove-spacer {
+  display: none;
+}
+@container folio (min-width: 34rem) {
+  .folio-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .folio-col-remove {
+    grid-column: 1 / -1;
+  }
+}
+@container folio (min-width: 54rem) {
+  .folio-grid {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 4fr) auto;
+  }
+  .folio-col-remove {
+    grid-column: auto;
+  }
+  .folio-remove-spacer {
+    display: block;
+  }
+}

@@ -1,0 +1,10 @@
+/* FlujoPago · Hoja de estilos de entrada.
+   Orden: tokens → base → componentes → manual → tema oscuro → Tailwind (las utilidades pueden ajustar casos puntuales). */
+@import './tokens.css';
+@import './base.css';
+@import './components.css';
+@import './manual.css';
+@import './dark.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

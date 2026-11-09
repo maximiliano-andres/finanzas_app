@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 401 - No Autorizado</title>
+    <link href="{{ url_for('public', path='CSS/error_401.css') }}" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header-line"></div>
+        
+        <div class="icon-wrapper">
+            <svg class="key-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- Llave con candado -->
+                <circle cx="35" cy="35" r="20" fill="none" stroke="url(#keyGradient)" stroke-width="3"/>
+                <circle cx="35" cy="35" r="8" fill="url(#keyGradient)"/>
+                <rect x="45" y="32" width="50" height="6" rx="3" fill="url(#keyGradient)"/>
+                <!-- Dientes de la llave -->
+                <rect x="70" y="28" width="4" height="6" fill="url(#keyGradient)"/>
+                <rect x="78" y="28" width="4" height="8" fill="url(#keyGradient)"/>
+                <rect x="86" y="28" width="4" height="6" fill="url(#keyGradient)"/>
+                
+                <!-- Símbolo de prohibición -->
+                <circle cx="85" cy="75" r="25" fill="none" stroke="url(#keyGradient)" stroke-width="4"/>
+                <line x1="65" y1="55" x2="105" y2="95" stroke="url(#keyGradient)" stroke-width="4" stroke-linecap="round"/>
+                
+                <defs>
+                    <linearGradient id="keyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff9800;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ffb74d;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="status-badge">No Autorizado</div>
+        
+        <div class="error-code">401</div>
+        <h1 class="error-title">Autenticación Requerida</h1>
+        <p class="error-message">No tienes autorización para acceder a este recurso. Por favor, inicia sesión con credenciales válidas para continuar.</p>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn-primary">Iniciar Sesión</a>
+            <a href="javascript:history.back()" class="btn-secondary">Volver Atrás</a>
+        </div>
+
+        <div class="operation-details">
+            🔑 Autenticación Requerida <br>
+            ⏱️ Tiempo: <span id="timestamp"></span> <br>
+            📧 ¿Olvidaste tu contraseña? Contacta al administrador
+        </div>
+    </div>
+
+    <script src="{{ url_for('public', path='JS/error_401.js') }}"></script>
+</body>
+</html>

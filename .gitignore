@@ -1,0 +1,96 @@
+# Python cache & compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+pip-selfcheck.json
+
+# IDEs & Editor configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Environment files (sensitive credentials)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Docker & Databases
+db/pgdata/
+pgdata/
+*.db
+*.sqlite3
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# App Generated Folders (PDFs and Logs)
+/doc_pdf/
+/PDF_firmados/
+/PDF_autorizaciones/
+/logs/
+*.log
+
+# Respaldos de la base de datos (servicio db-backup de docker-compose.yml) — contienen datos reales
+/backups/
+
+# Archivos de entorno adicionales (respaldo/ediciones locales del .env)
+.env.bak
+.env.backup
+.env.old
+
+# ==============================================================================
+# Frontend React (frontend/)
+# ==============================================================================
+# Dependencias
+frontend/node_modules/
+node_modules/
+
+# Build de producción (se genera con `npm run build`; el Dockerfile lo compila en su propia etapa)
+frontend/dist/
+
+# Cachés de herramientas
+*.tsbuildinfo
+frontend/.vite/
+.eslintcache
+
+# Resultados de pruebas (Vitest / Playwright)
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+frontend/e2e/.output/
+
+# Logs de npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

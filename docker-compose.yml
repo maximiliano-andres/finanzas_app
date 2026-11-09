@@ -1,0 +1,125 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: flujopago-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - flujopago-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+        reservations:
+          memory: 512M
+
+  redis:
+    image: redis:7-alpine
+    container_name: flujopago-redis
+    restart: always
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - flujopago-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flujopago-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DB_POOL_SIZE: "5"
+      DB_MAX_OVERFLOW: "10"
+      DB_ECHO: "False"
+      APP_ENV: production
+      SECRET_KEY: ${SECRET_KEY}
+      REDIS_URL: ${REDIS_URL}
+      FERNET_KEY: ${FERNET_KEY}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_FROM: ${SMTP_FROM}
+      ALLOWED_EMAIL_DOMAINS: ${ALLOWED_EMAIL_DOMAINS}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      JWT_ALGORITHM: ${JWT_ALGORITHM}
+      JWT_ACCESS_TOKEN_EXPIRE_SECONDS: ${JWT_ACCESS_TOKEN_EXPIRE_SECONDS}
+      JWT_REFRESH_TOKEN_EXPIRE_SECONDS: ${JWT_REFRESH_TOKEN_EXPIRE_SECONDS}
+      LOGIN_MAX_ATTEMPTS: ${LOGIN_MAX_ATTEMPTS}
+      LOGIN_LOCK_DURATION_SECONDS: ${LOGIN_LOCK_DURATION_SECONDS}
+      MFA_MAX_ATTEMPTS: ${MFA_MAX_ATTEMPTS}
+      MFA_LOCK_DURATION_SECONDS: ${MFA_LOCK_DURATION_SECONDS}
+      MFA_PENDING_EXPIRE_SECONDS: ${MFA_PENDING_EXPIRE_SECONDS}
+      EMAIL_OTP_EXPIRE_SECONDS: ${EMAIL_OTP_EXPIRE_SECONDS}
+      EMAIL_OTP_RATE_LIMIT_SECONDS: ${EMAIL_OTP_RATE_LIMIT_SECONDS}
+      MFA_BACKUP_CODES_COUNT: ${MFA_BACKUP_CODES_COUNT}
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - flujopago-network
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+
+  db-backup:
+    image: prodrigestivill/postgres-backup-local:16-alpine
+    container_name: flujopago-db-backup
+    restart: always
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=4
+      - BACKUP_KEEP_MONTHS=12
+    volumes:
+      - ./backups/db:/var/postgresql/backup
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - flujopago-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  flujopago-network:
+    driver: bridge

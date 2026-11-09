@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 403 - Acceso Denegado</title>
+    <link href="{{ url_for('public', path='CSS/error_403.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header-line"></div>
+        
+        <div class="icon-wrapper">
+            <svg class="lock-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- Candado cerrado -->
+                <rect x="35" y="55" width="50" height="50" rx="5" fill="url(#lockGradient)" stroke="currentColor" stroke-width="2"/>
+                <path d="M 45 55 Q 45 35 60 35 Q 75 35 75 55" fill="none" stroke="currentColor" stroke-width="2"/>
+                <!-- Ojo de cerradura -->
+                <circle cx="60" cy="75" r="6" fill="#0a0e13"/>
+                
+                <defs>
+                    <linearGradient id="lockGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#d32f2f;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="status-badge">Acceso Denegado</div>
+        
+        <div class="error-code">403</div>
+        <h1 class="error-title">Permiso Insuficiente</h1>
+        <p class="error-message">No tienes permiso para acceder a este recurso. Contacta con un administrador si crees que esto es un error.</p>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn-primary">Volver a Casa</a>
+            <a href="/flujopago/gestion-pagos/v1/dashboard" class="btn-secondary">Panel de Control</a>
+        </div>
+
+        <div class="operation-details">
+            🔒 Acceso Denegado <br>
+            ⏱️ Tiempo: <span id="timestamp"></span> <br>
+            📞 Contacta con Administración
+        </div>
+    </div>
+
+    <script src="{{ url_for('public', path='JS/error_403.js') }}"></script>
+</body>
+</html>

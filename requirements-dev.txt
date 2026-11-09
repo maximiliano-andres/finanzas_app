@@ -1,0 +1,4 @@
+# Dependencias para ejecutar la suite backend (además de requirements.txt).
+# pytest-asyncio es OBLIGATORIO: sin él, los 44 tests async de app/tests se omiten ("skipped") y la suite parece verde.
+pytest==8.3.3
+pytest-asyncio==0.23.8

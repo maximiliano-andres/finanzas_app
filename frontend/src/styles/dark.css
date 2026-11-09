@@ -1,0 +1,260 @@
+/* ==========================================================================
+   FlujoPago · Tema oscuro (según preferencia del sistema operativo)
+   Los componentes propios se adaptan solos vía tokens (tokens.css). Este archivo
+   solo ajusta utilidades de Tailwind usadas en el TSX que fijan colores claros.
+   Superficies: #121A21 (app) · #1A252F (tarjetas) · #16202A (hundidas) · #2A3846 (bordes)
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-app) !important;
+    color: var(--text-primary) !important;
+  }
+
+  /* Superficies */
+  .bg-white,
+  .bg-slate-50,
+  .bg-gray-50,
+  .content-section .bg-white,
+  #adminTabsContainer .bg-white,
+  #adminContent .bg-white {
+    background-color: var(--bg-primary) !important;
+  }
+  .bg-slate-100,
+  .bg-gray-100,
+  .bg-slate-50\/50,
+  .bg-gray-50\/50 {
+    background-color: var(--bg-secondary) !important;
+  }
+  .bg-slate-200,
+  .bg-gray-200 {
+    background-color: var(--border) !important;
+  }
+  .bg-white\/90,
+  .bg-white\/95 {
+    background-color: rgb(26 37 47 / 0.9) !important;
+  }
+  .bg-white\/10,
+  .bg-white\/20 {
+    background-color: rgb(255 255 255 / 0.06) !important;
+  }
+
+  /* Tintes de marca / información / estados */
+  .bg-purple-50,
+  .bg-indigo-50,
+  .bg-purple-100\/20,
+  .bg-purple-50\/50 {
+    background-color: rgb(160 177 194 / 0.08) !important;
+  }
+  .bg-purple-100,
+  .bg-purple-200 {
+    background-color: rgb(160 177 194 / 0.14) !important;
+  }
+  .bg-blue-50,
+  .bg-blue-50\/50,
+  .bg-blue-100\/20 {
+    background-color: rgb(95 144 192 / 0.1) !important;
+  }
+  .bg-blue-100,
+  .bg-blue-200 {
+    background-color: rgb(95 144 192 / 0.18) !important;
+  }
+  .bg-green-50,
+  .bg-emerald-50 {
+    background-color: var(--success-bg) !important;
+  }
+  .bg-red-50,
+  .bg-red-100 {
+    background-color: var(--danger-bg) !important;
+  }
+  .bg-amber-50,
+  .bg-yellow-50,
+  .bg-orange-50 {
+    background-color: var(--warning-bg) !important;
+  }
+  .hover\:bg-slate-50:hover,
+  .hover\:bg-slate-100:hover,
+  .hover\:bg-gray-50:hover,
+  .hover\:bg-gray-100:hover,
+  .hover\:bg-purple-50:hover {
+    background-color: var(--bg-hover) !important;
+  }
+  .hover\:bg-red-50:hover {
+    background-color: var(--danger-bg) !important;
+  }
+
+  /* Botones de marca: navy aclarado para destacar sobre superficies oscuras */
+  .bg-purple-heart,
+  .bg-primary {
+    background-color: var(--primary) !important;
+  }
+  .hover\:bg-purple-900:hover,
+  .hover\:bg-purple-800:hover,
+  .hover\:bg-primary-hover:hover {
+    background-color: var(--primary-hover) !important;
+  }
+
+  /* Texto */
+  .text-gray-900,
+  .text-slate-900,
+  .text-ink {
+    color: #f6f8fa !important;
+  }
+  .text-gray-800,
+  .text-slate-800 {
+    color: #eef1f4 !important;
+  }
+  .text-gray-700,
+  .text-slate-700 {
+    color: var(--text-primary) !important;
+  }
+  .text-gray-600,
+  .text-slate-600 {
+    color: var(--text-secondary) !important;
+  }
+  .text-gray-500,
+  .text-slate-500 {
+    color: var(--text-muted) !important;
+  }
+  .text-gray-400,
+  .text-slate-400 {
+    color: var(--text-light) !important;
+  }
+  .text-purple-heart,
+  .text-primary,
+  .text-purple-900,
+  .text-purple-800,
+  .text-purple-700,
+  .text-purple-600 {
+    color: #c3d1de !important;
+  }
+  .text-purple-500 {
+    color: #a9bccf !important;
+  }
+  .text-blue-900,
+  .text-blue-800,
+  .text-blue-700,
+  .text-blue-600,
+  .text-blue-500 {
+    color: var(--info) !important;
+  }
+  .text-green-800,
+  .text-green-700,
+  .text-green-600,
+  .text-green-500,
+  .text-emerald-600 {
+    color: var(--success) !important;
+  }
+  .text-red-900,
+  .text-red-800,
+  .text-red-700,
+  .text-red-600,
+  .text-red-500 {
+    color: var(--danger) !important;
+  }
+  .text-yellow-600,
+  .text-yellow-700,
+  .text-yellow-800,
+  .text-amber-600,
+  .text-amber-700,
+  .text-amber-800,
+  .text-casablanca {
+    color: var(--warning) !important;
+  }
+
+  /* Bordes */
+  .border,
+  .border-t,
+  .border-b,
+  .border-l,
+  .border-r,
+  .border-gray-100,
+  .border-gray-200,
+  .border-gray-300,
+  .border-slate-100,
+  .border-slate-200,
+  .border-slate-300,
+  .border-purple-100,
+  .border-purple-200,
+  .border-blue-100,
+  .border-blue-200,
+  .border-blue-100\/50 {
+    border-color: var(--border) !important;
+  }
+  .border-red-100,
+  .border-red-200 {
+    border-color: var(--danger-border) !important;
+  }
+  .divide-gray-100 > :not([hidden]) ~ :not([hidden]),
+  .divide-gray-200 > :not([hidden]) ~ :not([hidden]),
+  .divide-gray-300 > :not([hidden]) ~ :not([hidden]),
+  .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+    border-color: var(--border) !important;
+  }
+
+  /* Campos nativos */
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  input[type="date"],
+  input[type="search"],
+  input[type="tel"],
+  textarea,
+  select {
+    background-color: var(--bg-secondary) !important;
+    border-color: var(--border-dark) !important;
+    color: var(--text-primary) !important;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-light) !important;
+  }
+  select option {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.85);
+  }
+  label {
+    color: var(--text-secondary);
+  }
+
+  /* Tablas */
+  table tbody tr:hover td {
+    color: inherit;
+  }
+  .table-responsive-container {
+    background-image: linear-gradient(to right, var(--bg-primary), var(--bg-primary)),
+      linear-gradient(to right, var(--bg-primary), var(--bg-primary)),
+      linear-gradient(to right, rgb(0 0 0 / 0.45), rgb(0 0 0 / 0)),
+      linear-gradient(to left, rgb(0 0 0 / 0.45), rgb(0 0 0 / 0));
+  }
+
+  /* Badges que usan tonos fijos en claro */
+  .badge-approved-n2 {
+    background-color: rgb(95 144 192 / 0.22);
+    color: #a9c8e6;
+    border-color: rgb(143 182 220 / 0.4);
+  }
+  .badge-approved-finanzas,
+  .badge-role-finanzas {
+    border-color: rgb(169 188 207 / 0.3);
+    color: #c3d1de;
+  }
+  .badge-role-admin {
+    background-color: #c3d1de;
+    color: #1a252f;
+    border-color: #c3d1de;
+  }
+
+  .loading-overlay {
+    background-color: rgb(18 26 33 / 0.85);
+  }
+
+  /* Autenticación: el panel de formulario usa el fondo de la app para separarse del panel de marca (tinta) */
+  .auth-panel.bg-white {
+    background-color: var(--bg-app) !important;
+  }
+}

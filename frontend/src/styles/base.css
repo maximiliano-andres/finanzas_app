@@ -1,0 +1,129 @@
+/* ==========================================================================
+   FlujoPago · Base
+   Tipografía, fondo, foco accesible, scroll, selección y movimiento reducido.
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  /* El foco por teclado / anclas no deben quedar ocultos bajo la barra superior fija */
+  scroll-padding-top: calc(var(--nav-height) + 1rem);
+}
+
+/* Escalado fluido en pantallas grandes: toda la UI está en rem (Tailwind + tokens), así que crecer la raíz
+   escala tipografía, controles, espaciado y anchos de forma proporcional. 16px hasta 1920px → ~18px en 2560px
+   → 22px en 3840px (monitores 2K/4K a escala 100%). La parte en rem respeta el tamaño de letra del usuario. */
+@media (min-width: 1920px) {
+  html {
+    font-size: clamp(100%, 0.625rem + 0.3125vw, 137.5%);
+  }
+}
+
+/* Sin overflow-x:hidden en html/body: ocultaba desbordes reales (y cortaba contenido) en lugar de corregirlos.
+   El scroll horizontal se controla en origen (tablas con contenedor propio, layouts flexibles). */
+html,
+body {
+  position: relative;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: "Inter Variable", Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Cifras tabulares: montos, IDs y fechas alineados en tablas */
+table,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background-color: rgb(44 62 80 / 0.16);
+}
+
+/* Caret solo en elementos editables (comportamiento original conservado) */
+* {
+  caret-color: transparent;
+}
+input,
+textarea,
+[contenteditable],
+[contenteditable="true"] {
+  caret-color: auto;
+}
+i,
+.fas,
+.far,
+.fab,
+button {
+  user-select: none;
+}
+
+/* Foco visible y consistente para teclado (no se muestra con clic de mouse) */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none; /* los campos usan anillo propio (ver components.css) */
+}
+
+main {
+  min-width: 0;
+  width: 100%;
+}
+
+/* Scroll del body bloqueado con menú móvil abierto */
+body.sidebar-open {
+  overflow: hidden !important;
+}
+
+/* Barras de desplazamiento discretas */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-dark) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--border-dark);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-light);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 422 - Datos Inválidos</title>
+    <link href="{{ url_for('public', path='CSS/error_422.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header-line"></div>
+        
+        <div class="icon-wrapper">
+            <svg class="warning-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- Formulario con errores -->
+                <rect x="20" y="15" width="80" height="90" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="30" y1="30" x2="110" y2="30" stroke="currentColor" stroke-width="2"/>
+                <circle cx="30" cy="50" r="4" fill="currentColor"/>
+                <line x1="40" y1="48" x2="100" y2="48" stroke="currentColor" stroke-width="2"/>
+                <circle cx="30" cy="70" r="4" fill="currentColor"/>
+                <line x1="40" y1="68" x2="100" y2="68" stroke="currentColor" stroke-width="2"/>
+                <!-- Marca de error -->
+                <circle cx="85" cy="85" r="12" fill="url(#warningGradient)"/>
+                <text x="85" y="92" font-size="20" font-weight="bold" text-anchor="middle" fill="#0a0e13">!</text>
+                
+                <defs>
+                    <linearGradient id="warningGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff9800;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ffb74d;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="status-badge">Datos Inválidos</div>
+        
+        <div class="error-code">422</div>
+        <h1 class="error-title">Error de Validación</h1>
+        <p class="error-message">Los datos enviados contienen errores o están incompletos. Por favor, verifica la información e intenta nuevamente.</p>
+        
+        <div class="action-buttons">
+            <a href="javascript:history.back()" class="btn-primary">Volver Atrás</a>
+            <a href="/" class="btn-secondary">Ir a Casa</a>
+        </div>
+
+        <div class="operation-details">
+            ⚠️ Errores de Validación Detectados <br>
+            ⏱️ Tiempo: <span id="timestamp"></span> <br>
+            💡 Verifica los datos de tu formulario
+        </div>
+    </div>
+
+    <script src="{{ url_for('public', path='JS/error_422.js') }}"></script>
+</body>
+</html>

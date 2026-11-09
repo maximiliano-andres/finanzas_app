@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 500 - Servidor</title>
+    <link href="{{ url_for('public', path='CSS/error_500.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header-line"></div>
+        
+        <div class="icon-wrapper">
+            <svg class="alert-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- Triángulo de alerta -->
+                <path d="M 60 10 L 110 100 L 10 100 Z" fill="url(#dangerGradient)" stroke="currentColor" stroke-width="2"/>
+                <!-- Signo de exclamación -->
+                <circle cx="60" cy="70" r="6" fill="#0a0e13"/>
+                <rect x="57" y="40" width="6" height="20" rx="3" fill="#0a0e13"/>
+                
+                <defs>
+                    <linearGradient id="dangerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#d32f2f;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="status-badge">Error del Servidor</div>
+        
+        <div class="error-code">500</div>
+        <h1 class="error-title">Error en las Operaciones</h1>
+        <p class="error-message">Se ha detectado un problema crítico en nuestros sistemas. Nuestro equipo técnico ha sido notificado y está trabajando para resolver el issue.</p>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn-primary">Volver a Casa</a>
+            <a href="/flujopago/gestion-pagos/v1/dashboard" class="btn-secondary">Panel de Control</a>
+        </div>
+
+        <div class="operation-details">
+            ⚠️ Error Crítico Detectado <br>
+            ⏱️ Tiempo del Incidente: <span id="timestamp"></span> <br>
+            🆘 Contacta a Soporte si persiste
+        </div>
+    </div>
+
+    <script src="{{ url_for('public', path='JS/error_500.js') }}"></script>
+</body>
+</html>

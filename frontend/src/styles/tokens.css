@@ -1,0 +1,156 @@
+/* ==========================================================================
+   FlujoPago · Design tokens 2026
+   Paleta de referencia: #FFFFFF · #F1F3F5 · #6C7A89 · #2C3E50 · #1A252F
+   Los nombres históricos (--bg-primary, --border, --text-light…) se conservan
+   porque el TSX los usa; solo cambian sus valores.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Paleta base */
+  --c-white: #ffffff;
+  --c-mist: #f1f3f5;
+  --c-steel: #6c7a89;
+  --c-navy: #2c3e50;
+  --c-ink: #1a252f;
+
+  /* Roles de marca */
+  --primary: var(--c-navy);
+  --primary-hover: #233241;
+  --primary-active: #1a252f;
+  --primary-soft: #e3e9ef;
+  --primary-contrast: #ffffff;
+  --secondary: var(--c-steel);
+  --accent: #3a5068;          /* navy medio: estados destacados sin introducir un color ajeno a la paleta */
+  --focus-ring: rgb(44 62 80 / 0.35);
+
+  /* Estados semánticos (tono sobrio, texto ≥ 4.5:1 sobre su fondo) */
+  --success: #2f7d55;
+  --success-bg: #e8f4ee;
+  --success-border: #b9dcc8;
+  --warning: #9a6412;
+  --warning-bg: #fbf3e2;
+  --warning-border: #ecd3a1;
+  --danger: #b4332b;
+  --danger-hover: #992a23;
+  --danger-bg: #fbecea;
+  --danger-border: #f0c4bf;
+  --info: #2e5f8f;
+  --info-bg: #ebf2f9;
+  --info-border: #c3d6ea;
+
+  /* Superficies y texto */
+  --bg-app: var(--c-mist);
+  --bg-primary: var(--c-white);    /* superficie: tarjetas, paneles, modales */
+  --bg-secondary: #f7f8fa;         /* superficie hundida: cabeceras de tabla, pies */
+  --bg-tertiary: var(--c-mist);
+  --bg-hover: #f4f6f8;
+  --text-primary: var(--c-ink);
+  --text-secondary: #3b4a59;
+  --text-muted: #637181;
+  --text-light: #8a96a3;
+  --border: #e3e7eb;
+  --border-dark: #cdd3da;
+
+  /* Navegación lateral */
+  --nav-bg: var(--c-ink);
+  --nav-text: #b6c0ca;
+  --nav-text-hover: #ffffff;
+  --nav-item-hover: rgb(255 255 255 / 0.06);
+  --nav-item-active: var(--c-navy);
+  --nav-border: rgb(255 255 255 / 0.08);
+
+  /* Layout */
+  --nav-height: 4rem; /* en rem: escala con la raíz en 2K/4K */
+  --sidebar-w: 17rem;
+  --sidebar-w-collapsed: 4.75rem;
+
+  /* Tipografía (escala fija y legible; nada por debajo de 11px) */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 0.9375rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.375rem;
+
+  /* Espaciado */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1.25rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 2rem;
+
+  /* Radios */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Controles */
+  --control-h: 40px;
+  --pad-input: 0.5rem 0.75rem;
+  --pad-button: 0.5rem 1rem;
+
+  /* Profundidad */
+  --shadow-card: 0 1px 2px 0 rgb(16 24 32 / 0.04), 0 2px 8px -2px rgb(16 24 32 / 0.08);
+  --shadow-pop: 0 12px 28px -8px rgb(16 24 32 / 0.18), 0 4px 10px -4px rgb(16 24 32 / 0.08);
+  --shadow-modal: 0 24px 48px -12px rgb(16 24 32 / 0.28);
+  --shadow-premium: var(--shadow-pop);
+  --glass: rgb(255 255 255 / 0.85);
+  --glass-border: rgb(16 24 32 / 0.08);
+
+  /* Movimiento: rápido y sutil */
+  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --primary: #4a6582;          /* navy aclarado: botones con texto blanco (6:1) sobre fondos tinta */
+    --primary-hover: #57728f;
+    --primary-active: #3f5871;
+    --primary-soft: rgb(160 177 194 / 0.14);
+    --secondary: #9aa6b2;
+    --accent: #a9bccf;
+    --focus-ring: rgb(169 188 207 / 0.45);
+
+    --success: #6cc49a;
+    --success-bg: rgb(47 125 85 / 0.18);
+    --success-border: rgb(108 196 154 / 0.35);
+    --warning: #e3b363;
+    --warning-bg: rgb(154 100 18 / 0.2);
+    --warning-border: rgb(227 179 99 / 0.35);
+    --danger: #ef8a82;
+    --danger-hover: #f3a39c;
+    --danger-bg: rgb(180 51 43 / 0.2);
+    --danger-border: rgb(239 138 130 / 0.35);
+    --info: #8fb6dc;
+    --info-bg: rgb(46 95 143 / 0.22);
+    --info-border: rgb(143 182 220 / 0.35);
+
+    --bg-app: #121a21;
+    --bg-primary: #1a252f;
+    --bg-secondary: #16202a;
+    --bg-tertiary: #121a21;
+    --bg-hover: #21303d;
+    --text-primary: #eef1f4;
+    --text-secondary: #c9d1d9;
+    --text-muted: #9aa6b2;
+    --text-light: #7d8a97;
+    --border: #2a3846;
+    --border-dark: #364656;
+
+    --nav-bg: #10171e;
+    --nav-item-active: #2c3e50;
+
+    --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-pop: 0 12px 28px -8px rgb(0 0 0 / 0.55);
+    --shadow-modal: 0 24px 48px -12px rgb(0 0 0 / 0.7);
+    --glass: rgb(26 37 47 / 0.85);
+    --glass-border: rgb(255 255 255 / 0.06);
+  }
+}

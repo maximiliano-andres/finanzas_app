@@ -1,0 +1,178 @@
+{
+  "security_config": {
+    "version": "2.0",
+    "description": "Configuración de Seguridad del Workflow - FlujoPago",
+    "last_updated": "2026-02-04",
+    
+    "severity_thresholds": {
+      "CRÍTICO": {
+        "cvss_min": 9.0,
+        "cvss_max": 10.0,
+        "action_required": "INMEDIATO",
+        "sla_hours": 4,
+        "description": "Vulnerabilidades con riesgo crítico de explotación"
+      },
+      "ALTO": {
+        "cvss_min": 7.0,
+        "cvss_max": 8.9,
+        "action_required": "SIGUIENTE_SPRINT",
+        "sla_hours": 72,
+        "description": "Vulnerabilidades con alto potencial de explotación"
+      },
+      "MEDIO": {
+        "cvss_min": 4.0,
+        "cvss_max": 6.9,
+        "action_required": "PLANIFICAR",
+        "sla_hours": 672,
+        "description": "Vulnerabilidades de riesgo moderado"
+      },
+      "BAJO": {
+        "cvss_min": 0.1,
+        "cvss_max": 3.9,
+        "action_required": "MONITOREAR",
+        "sla_hours": 2160,
+        "description": "Vulnerabilidades de bajo riesgo"
+      },
+      "INFORMACIÓN": {
+        "cvss_min": 0.0,
+        "cvss_max": 0.0,
+        "action_required": "INFORMATIVO",
+        "sla_hours": null,
+        "description": "Información de seguridad sin vulnerabilidad"
+      }
+    },
+
+    "tools": {
+      "pip_audit": {
+        "enabled": true,
+        "version": "2.6.1",
+        "description": "Auditoría de seguridad de PyPI",
+        "priority": 1,
+        "output_formats": ["json", "markdown", "cyclonedx"]
+      },
+      "safety": {
+        "enabled": true,
+        "version": "3.0.1",
+        "description": "Verificación de vulnerabilidades conocidas",
+        "priority": 2,
+        "output_formats": ["json", "text"]
+      },
+      "pip_list_outdated": {
+        "enabled": true,
+        "description": "Detección de paquetes desactualizados",
+        "priority": 3,
+        "output_formats": ["json"]
+      },
+      "pip_licenses": {
+        "enabled": true,
+        "version": "4.3.2",
+        "description": "Análisis de licencias open source",
+        "priority": 4,
+        "output_formats": ["json"]
+      },
+      "cyclonedx": {
+        "enabled": true,
+        "version": "4.0.0",
+        "description": "Generación de Software Bill of Materials",
+        "priority": 5,
+        "output_formats": ["json", "xml"]
+      }
+    },
+
+    "report_generation": {
+      "format": "PDF",
+      "tool": "reportlab",
+      "sections": [
+        "title_page",
+        "executive_summary",
+        "vulnerability_details",
+        "outdated_packages",
+        "recommendations",
+        "footer"
+      ],
+      "styles": {
+        "colors": {
+          "critical": "#d32f2f",
+          "high": "#f57c00",
+          "medium": "#fbc02d",
+          "low": "#388e3c",
+          "info": "#1976d2",
+          "primary": "#1a1a1a",
+          "secondary": "#555555"
+        },
+        "fonts": {
+          "title": "Helvetica-Bold",
+          "heading": "Helvetica-Bold",
+          "body": "Helvetica"
+        }
+      },
+      "page_size": "letter",
+      "margins_inches": 0.75
+    },
+
+    "scanning_schedule": {
+      "push": ["main", "Maximiliano", "main-respaldo"],
+      "pull_requests": ["main", "Maximiliano", "main-respaldo"],
+      "cron": "0 2 * * *",
+      "cron_timezone": "UTC",
+      "cron_description": "Diariamente a las 2:00 AM UTC"
+    },
+
+    "actions": {
+      "on_critical": [
+        "Crear alerta inmediata",
+        "Notificar a equipo de seguridad",
+        "Bloquear merge en PR",
+        "Crear issue de hotfix"
+      ],
+      "on_high": [
+        "Crear reporte detallado",
+        "Planificar actualización",
+        "Notificar a líderes técnicos"
+      ],
+      "on_medium": [
+        "Incluir en backlog",
+        "Evaluar impacto",
+        "Planificar para siguiente sprint"
+      ],
+      "on_low": [
+        "Monitorear",
+        "Actualizar cuando sea conveniente"
+      ]
+    },
+
+    "retention": {
+      "safety_report_days": 30,
+      "pip_audit_days": 30,
+      "outdated_days": 30,
+      "licenses_days": 30,
+      "sbom_days": 30,
+      "security_report_pdf_days": 90
+    },
+
+    "notifications": {
+      "github_checks": true,
+      "github_check_description": "Reporte de Auditoria de Seguridad disponible en Artifacts",
+      "slack_integration": false,
+      "email_integration": false
+    },
+
+    "metadata": {
+      "project": "FlujoPago - Sistema de Solicitudes",
+      "owner": "FlujoPago Security Team",
+      "last_modified": "2026-02-04T00:00:00Z",
+      "version_history": [
+        {
+          "version": "1.0",
+          "date": "2024-01-15",
+          "changes": "Versión inicial"
+        },
+        {
+          "version": "2.0",
+          "date": "2026-02-04",
+          "changes": "Mejorado con reportes profesionales y clasificación detallada"
+        }
+      ]
+    }
+  }
+}

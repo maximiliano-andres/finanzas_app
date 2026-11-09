@@ -1,0 +1,243 @@
+name: 🔒 Security Vulnerability Check
+
+on:
+  push:
+    branches:
+      - main
+      - Maximiliano
+      - main-respaldo
+  pull_request:
+    branches:
+      - main
+      - Maximiliano
+      - main-respaldo
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  # --------------------------------------------------
+  # Detectar cambios relevantes (JOB LIVIANO)
+  # --------------------------------------------------
+  changes:
+    name: 🧠 Detect Changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      deps: ${{ steps.filter.outputs.deps }}
+      code: ${{ steps.filter.outputs.code }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect file changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            deps:
+              - 'requirements*.txt'
+              - 'pyproject.toml'
+              - 'poetry.lock'
+            code:
+              - '**/*.py'
+
+  # --------------------------------------------------
+  # Safety
+  # --------------------------------------------------
+  safety:
+    name: 🛡️ Safety Check
+    needs: changes
+    if: needs.changes.outputs.deps == 'true' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - run: |
+          pip install --upgrade pip setuptools wheel
+          pip install safety==3.0.1 --no-cache-dir
+
+      - run: |
+          safety check --requirements requirements.txt \
+            --json --output safety-report.json || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: safety-report
+          path: safety-report.json
+          retention-days: 30
+
+  # --------------------------------------------------
+  # pip-audit
+  # --------------------------------------------------
+  pip-audit:
+    name: 🔎 Pip-Audit Check
+    needs: changes
+    if: needs.changes.outputs.deps == 'true' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - run: |
+          pip install --upgrade pip setuptools wheel
+          pip install pip-audit==2.6.1 --no-cache-dir
+
+      - run: |
+          pip-audit --desc --format json \
+            --output audit-report.json --skip-editable || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pip-audit-report
+          path: audit-report.json
+          retention-days: 30
+
+  # --------------------------------------------------
+  # Outdated packages
+  # --------------------------------------------------
+  outdated:
+    name: 📦 Outdated Packages
+    needs: changes
+    if: needs.changes.outputs.deps == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - run: |
+          pip install -r requirements.txt --no-cache-dir 2>/dev/null || true
+          pip list --outdated --format json > outdated.json || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: outdated-report
+          path: outdated.json
+          retention-days: 30
+
+  # --------------------------------------------------
+  # Licenses
+  # --------------------------------------------------
+  licenses:
+    name: ⚖️ License Check
+    needs: changes
+    if: needs.changes.outputs.deps == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - run: |
+          pip install pip-licenses==4.3.2 --no-cache-dir
+          pip install -r requirements.txt --no-cache-dir 2>/dev/null || true
+          pip-licenses --format=json --output-file=licenses.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: license-report
+          path: licenses.json
+          retention-days: 30
+
+  # --------------------------------------------------
+  # SBOM
+  # --------------------------------------------------
+  sbom:
+    name: 📋 Generate SBOM
+    needs: changes
+    if: needs.changes.outputs.deps == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - run: |
+          pip install cyclonedx-bom==4.0.0 --no-cache-dir
+          cyclonedx-bom -o sbom.json -of json requirements.txt || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sbom
+          path: sbom.json
+          retention-days: 30
+
+  # --------------------------------------------------
+  # Unified Security Report (PDF)
+  # --------------------------------------------------
+  report:
+    name: 📄 Dependency Security Report
+    needs: [safety, pip-audit, outdated]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    if: always()
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Install report dependencies
+        run: |
+          pip install reportlab==4.0.8 packaging
+
+      - name: Generate PDF report
+        run: |
+          python .github/scripts/generate_security_report.py
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-security-report
+          path: security-report-*.pdf
+          retention-days: 90

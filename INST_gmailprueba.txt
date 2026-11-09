@@ -1,0 +1,6 @@
+ Generar la Contraseña de Aplicación en Google
+Ve a la cuenta de Google que usarás para enviar correos: myaccount.google.com/security.
+En la sección "Cómo accedes a Google", asegúrate de tener activada la Verificación en dos pasos (si no la tienes, actívala, es un requisito).
+Una vez activada, usa el buscador en la parte superior de esa página y escribe "Contraseñas de aplicaciones" (o "App Passwords" si está en inglés) y entra ahí.
+En el nombre de la app puedes poner "FlujoPago Prueba" y dale a Crear.
+Te aparecerá un recuadro amarillo con una contraseña de 16 letras (ej: abcd efgh ijkl mnop). Cópiala.

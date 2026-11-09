@@ -1,0 +1,370 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark-bg: #0a0e13;
+    --dark-card: #131820;
+    --dark-accent: #1f2632;
+    --light-bg: #f5f5f5;
+    --light-card: #ffffff;
+    --light-accent: #efefef;
+    --warning: #ff9800;
+    --warning-light: #ffb74d;
+    --warning-dark: #f57c00;
+    --text-dark: #0a0e13;
+    --text-light: #e0e0e0;
+    --border: #2a3340;
+
+    /* Variables responsivas */
+    --container-max-width: 650px;
+    --container-padding: clamp(30px, 8vw, 70px) clamp(20px, 6vw, 50px);
+    --header-line-width: clamp(60px, 12vw, 80px);
+    --icon-size: clamp(60px, 20vw, 100px);
+    --error-code-size: clamp(48px, 12vw, 80px);
+    --error-title-size: clamp(20px, 6vw, 32px);
+    --error-message-size: clamp(14px, 3.5vw, 16px);
+    --button-padding: clamp(10px, 2vw, 13px) clamp(18px, 4vw, 28px);
+    --button-font-size: clamp(13px, 3vw, 15px);
+    --gap-primary: clamp(10px, 3vw, 14px);
+    --gap-secondary: clamp(30px, 6vw, 40px);
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #0a0e13 0%, #1a1f2a 100%);
+        color: var(--text-light);
+    }
+
+    .container {
+        background: linear-gradient(135deg, #131820 0%, #1a2229 100%);
+        border-color: var(--warning);
+        box-shadow: 0 8px 32px rgba(255, 152, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        color: var(--text-dark);
+    }
+
+    .container {
+        background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
+        border-color: #ffd699;
+        box-shadow: 0 8px 32px rgba(255, 152, 0, 0.1), inset 0 1px 0 rgba(0, 0, 0, 0.02);
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(15px, 4vw, 20px);
+    transition: background 0.3s ease;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    padding: var(--container-padding);
+    border-radius: clamp(8px, 2vw, 12px);
+    border: clamp(1px, 0.3vw, 2px) solid;
+    text-align: center;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header-line {
+    width: var(--header-line-width);
+    height: clamp(2px, 0.5vw, 3px);
+    margin: 0 auto clamp(25px, 8vw, 40px);
+    background: linear-gradient(90deg, var(--warning) 0%, var(--warning-light) 50%, var(--warning-dark) 100%);
+    border-radius: 2px;
+    animation: slideIn 0.8s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+
+    to {
+        width: var(--header-line-width);
+        opacity: 1;
+    }
+}
+
+.icon-wrapper {
+    margin-bottom: var(--gap-secondary);
+    position: relative;
+    display: inline-block;
+    animation: scaleIn 0.6s ease-out 0.2s both;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.key-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    animation: swing 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px rgba(255, 152, 0, 0.3));
+    will-change: transform;
+}
+
+@keyframes swing {
+
+    0%,
+    100% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+}
+
+.error-code {
+    font-size: var(--error-code-size);
+    font-weight: 800;
+    margin: clamp(12px, 4vw, 20px) 0;
+    letter-spacing: -0.05em;
+    background: linear-gradient(135deg, var(--warning) 0%, var(--warning-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.error-title {
+    font-size: var(--error-title-size);
+    font-weight: 700;
+    margin-bottom: clamp(8px, 2vw, 12px);
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.error-message {
+    font-size: var(--error-message-size);
+    line-height: 1.7;
+    opacity: 0.85;
+    margin-bottom: clamp(20px, 8vw, 45px);
+    word-break: break-word;
+    hyphens: auto;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: clamp(4px, 1vw, 6px) clamp(10px, 3vw, 14px);
+    background: linear-gradient(135deg, var(--warning), var(--warning-light));
+    color: #ffffff;
+    border-radius: 20px;
+    font-size: clamp(10px, 2.5vw, 12px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: clamp(15px, 6vw, 25px);
+    white-space: nowrap;
+}
+
+.action-buttons {
+    display: flex;
+    gap: var(--gap-primary);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: clamp(20px, 8vw, 35px);
+}
+
+a,
+button {
+    padding: var(--button-padding);
+    border-radius: clamp(4px, 1vw, 6px);
+    font-size: var(--button-font-size);
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--warning) 0%, var(--warning-light) 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.35);
+    flex: 1;
+    min-width: 140px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(255, 152, 0, 0.45);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--warning);
+    border: 2px solid var(--warning);
+    flex: 1;
+    min-width: 140px;
+}
+
+.btn-secondary:hover {
+    background-color: var(--warning);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+}
+
+.btn-secondary:active {
+    transform: translateY(-1px);
+}
+
+.operation-details {
+    margin-top: var(--gap-secondary);
+    padding-top: clamp(20px, 6vw, 30px);
+    border-top: 1px solid var(--border);
+    opacity: 0.7;
+    font-size: clamp(10px, 2vw, 12px);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
+
+/* Tablets pequeños: 360px - 480px */
+@media (max-width: 480px) {
+    .action-buttons {
+        flex-direction: column;
+        gap: clamp(8px, 2vw, 10px);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        flex: none;
+        min-width: unset;
+    }
+
+    .operation-details {
+        font-size: 10px;
+    }
+}
+
+/* Tablets grandes: 481px - 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+    .action-buttons {
+        gap: var(--gap-primary);
+    }
+}
+
+/* Desktop pequeño: 769px - 1024px */
+@media (min-width: 769px) {
+    .container:hover {
+        box-shadow: 0 12px 48px rgba(255, 152, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+        outline: 2px solid var(--warning);
+        outline-offset: 4px;
+    }
+}
+
+/* Desktop grande: 1025px+ */
+@media (min-width: 1025px) {
+    body {
+        padding: 20px;
+    }
+}
+
+/* Optimización para orientación */
+@media (orientation: landscape) and (max-height: 600px) {
+    .container {
+        padding: 30px clamp(20px, 8vw, 50px);
+    }
+
+    .error-code {
+        margin: 8px 0;
+    }
+
+    .icon-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .action-buttons {
+        margin-bottom: 15px;
+    }
+}
+
+/* Reducir animaciones para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High DPI devices */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .key-icon {
+        filter: drop-shadow(0 2px 6px rgba(255, 152, 0, 0.4));
+    }
+}
+
+/* Soportar navegadores antiguos */
+@supports not (clamp(1px, 2%, 3px)) {
+    :root {
+        --container-padding: 50px 30px;
+        --icon-size: 80px;
+        --error-code-size: 64px;
+        --error-title-size: 26px;
+    }
+}

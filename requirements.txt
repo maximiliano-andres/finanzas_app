@@ -1,0 +1,42 @@
+# Framework Web y Servidor
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+jinja2==3.1.4
+python-multipart==0.0.6
+python-dotenv==1.0.0
+
+# Validación de Datos (Pydantic v2)
+pydantic==2.5.0
+email-validator==2.1.0
+
+# Base de Datos
+sqlalchemy==2.0.23
+psycopg[binary]==3.1.18
+asyncpg==0.29.0
+
+# Rendimiento y Serialización
+uvloop==0.19.0
+httptools==0.6.1
+
+# Seguridad y Autenticación
+PyJWT==2.10.1
+argon2-cffi==23.1.0
+
+# Utilidades
+aiofiles==23.2.1
+pikepdf==8.11.2
+
+orjson==3.10.15
+httpx==0.24.1
+
+# 2FA - Autenticación de Doble Factor
+pyotp==2.9.0
+qrcode[pil]==7.4.2
+cryptography==42.0.5
+passlib[bcrypt]==1.7.4
+redis[hiredis]==5.0.1
+fastapi-limiter==0.1.6
+
+# Email
+aiosmtplib==3.0.1
+premailer==3.10.0
